@@ -1,0 +1,24 @@
+Use '<C-K>' to expand snippets
+Use ',sn' to snippets for the current filetype
+'cp' is an action to copy to the system clipboard
+'cv' is an action to copy paste from the system clipboard
+'cV' will paste the system clipboard to the next line
+'gs' stands for 'go sort!'
+'ai' and 'ii' are 'around indent' and 'in indent'
+'ak' and 'ik' are 'around key' and 'in key'
+'av' and 'iv' are 'around value' and 'in value'
+'ae' and 'ie' target the entire buffer
+'al' and 'il' target the current line
+',u' to bring up the under history tree
+'q:' will bring up the command history
+':reg' to show the contents of the registers
+'"#p' where will paste the contents of register '#'
+']c' will jump to the next change in a file
+'[c' will jump to the previous change in a file
+',gs' will open a git status
+',gp' will git push
+',gf' will git fetch
+',gr' will git rebase
+',gl' will show the git log
+',gh' will open in github
+',gb' will run a git blame
