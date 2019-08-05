@@ -1,0 +1,29 @@
+#!/usr/bin/env ruby
+require 'fileutils'
+
+GITHUB_REPOS_PATH = File.expand_path('~/github')
+
+EXPECTED_LENGTH = 1
+EXPECTED_FORMAT = /^[\w\-\.]+\/[\w\-\.]+$/
+
+USAGE = <<-DOC
+Usage: $ clone qualified/github-repo
+  Clones the specified repo into ~/github/ORG_NAME/REPO_NAME
+DOC
+
+unless ARGV.length == EXPECTED_LENGTH and ARGV[0] =~ EXPECTED_FORMAT
+  puts USAGE
+  return
+end
+
+qualified_reponame = ARGV[0]
+full_path = File.join(GITHUB_REPOS_PATH, qualified_reponame)
+
+puts full_path
+
+if Dir.exists?(full_path) and Dir.exists?(File.join full_path, '.git')
+  puts "Notice: Directory `#{full_path}` already exists and is a git repo."
+else
+  FileUtils.mkdir_p(full_path)
+  `hub clone #{qualified_reponame} #{full_path}`
+end
