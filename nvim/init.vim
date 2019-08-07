@@ -180,9 +180,9 @@ set statusline+=\ %y
 
 nnoremap <Leader>u :UndotreeToggle<CR>
 
-let g:pg_dev='postgres:bigspring_local'
-nnoremap <Leader>pg :DB g:pg_dev 
-vnoremap <Leader>pg :DB g:pg_dev<CR>
+let g:bigspring_local='postgres:bigspring_local'
+nnoremap <Leader>pg :DB g:bigspring_local 
+vnoremap <Leader>pg :DB g:bigspring_local<CR>
 
 set path+=**
 set wildmenu
@@ -225,3 +225,5 @@ nnoremap <silent> <Leader><TAB>  :call ToggleNetrw()<CR>
 
 nnoremap ;  :
 nnoremap q; q:
+vnoremap ;  :
+vnoremap q; q:

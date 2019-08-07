@@ -2,6 +2,10 @@ export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 export PATH="/usr/local/sbin:$PATH"
 export PATH="/Applications/Postgres.app/Contents/Versions/latest/bin:$PATH"
 
+if command -v tmux &> /dev/null && [ -z "$TMUX" ]; then
+    tmux attach -t default || tmux new -s default
+fi
+
 HISTSIZE=10000
 SAVEHIST=10000
 HISTFILE=~/.zsh_history
@@ -42,10 +46,10 @@ export FZF_DEFAULT_COMMAND='ag -g ""'
 export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
 export FZF_DEFAULT_OPTIONS="--preview 'bat --style=numbers --color=always {}'"
 
-source ./secrets/zshrc
+source ~/.dotfiles/secrets/zshrc
 
 alias pgcli_remote="pgcli -U $__SECRET__RDS_USER -d $__SECRET__RDS_DATABASE"
-alias pgcli_development="pgcli_remote -h $__SECRET__DEVELOPMENT_RDS_HOST"
+alias pgcli_development="echo $__SECRET__DEVELOPMENT_RDS_PASSWORD | pbcopy && pgcli_remote -h $__SECRET__DEVELOPMENT_RDS_HOST"
 alias pgcli_local="pgcli -d bigspring_local"
 alias psql_local="psql -d bigspring_local"
 alias psql_development="psql -U $__SECRET__RDS_USER -d $__SECRET__RDS_DATABASE -h $__SECRET__DEVELOPMENT_RDS_HOST"
@@ -75,3 +79,7 @@ BASE16_SHELL="$HOME/.config/base16-shell/"
     [ -s "$BASE16_SHELL/profile_helper.sh" ] && \
         eval "$("$BASE16_SHELL/profile_helper.sh")"
 base16_tomorrow
+
+function issue() {
+  jira $@ $(jira current)
+}
