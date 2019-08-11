@@ -1,0 +1,112 @@
+#!/usr/bin/env ruby
+require 'json'
+require 'shellwords'
+
+class AppleScriptApplication
+  def initialize(name)
+    @name = name
+  end
+
+  class AppleScriptEntity
+    def initialize(application, properties)
+      @application = application
+      @hash = Hash.new
+      @properties = properties
+    end
+
+    def marshal(thing)
+      @properties.each do |property|
+        @hash[property.to_s] = @application.fetch_as_json("get #{property} of (#{thing})")
+      end
+    end
+  end
+  def osascript(script)
+    with_json = <<-APPLESCRIPT
+      set json to load script "/Users/zach/.dotfiles/scripts/json.scpt"
+      #{script}
+    APPLESCRIPT
+    `echo #{Shellwords.escape(with_json)} | osascript`
+  end
+  def tell(body)
+    osascript <<-APPLESCRIPT
+      tell application "#{@name}"
+        #{body}
+      end tell
+    APPLESCRIPT
+  end
+  def fetch_as_json(command)
+    begin
+      JSON.parse \
+        tell <<-APPLESCRIPT
+          set retval to json's encode(#{command})
+          retval
+        APPLESCRIPT
+    rescue
+      nil
+    end
+  end
+end
+
+class Things < AppleScriptApplication
+  def initialize()
+    super('Things3')
+  end
+
+  class Todo < AppleScriptEntity
+    def initialize(application, name)
+      super(application, [:id, :status, :notes, :name])
+      marshal("to do \"#{name}\"")
+    end
+  end
+  class Area < AppleScriptEntity
+    def initialize(application, name)
+      super(application, [:id, :name])
+      marshal("area \"#{name}\"")
+    end
+
+    def todos()
+      @todos ||=
+        begin
+          names = @application.tell <<-APPLESCRIPT
+            set names to {}
+            repeat with todo in to dos of area "#{@hash["name"]}"
+              set names to names & todo's name
+            end repeat
+            names
+          APPLESCRIPT
+          names.split("\n").map do |name|
+            Todo.new(@application, name)
+          end
+        end
+      @todos
+    end
+  end
+  class Project < AppleScriptEntity
+    def initialize(application, name)
+      super(application, [:id, :name])
+      marshal("project \"#{name}\"")
+    end
+    def todos()
+      @todos ||=
+        begin
+          names = JSON.parse @application.tell <<-APPLESCRIPT
+            set names to {}
+            repeat with todo in to dos of project "#{@hash["name"]}"
+              set names to names & todo's name
+            end repeat
+            json's encode(names)
+          APPLESCRIPT
+          names.map do |name|
+            Todo.new(@application, name)
+          end
+        end
+      @todos
+    end
+  end
+end
+
+
+things = Things.new
+# area = Things::Area.new(things, "Household & Chores")
+project = Things::Project.new(things, "Attend a conference")
+puts project.todos.inspect
