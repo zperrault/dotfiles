@@ -10,24 +10,28 @@ Plug 'tpope/vim-commentary'
 Plug 'tpope/vim-surround'
 Plug 'tpope/vim-repeat'
 Plug 'tpope/vim-dispatch'
+Plug 'tpope/vim-obsession'
+Plug 'tpope/vim-abolish'
 
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_add_default_project_roots = 0
-let g:gutentags_cache_dir = '~/.ctags_cache/'
+let g:gutentags_cache_dir = '~/.ctags_cache'
 let g:gutentags_project_root = ['package.json', '.git']
+
+Plug 'sbdchd/neoformat'
+augroup fmt
+  autocmd!
+  autocmd BufWritePre * undojoin | Neoformat
+augroup END
 
 " JavaScript
 Plug 'pangloss/vim-javascript', { 'for': ['javascript', 'typescript'] }
 Plug 'paulrosania/vim-graphql', { 'for': ['graphql', 'javascript', 'typescript'] }
 Plug 'othree/xml.vim', { 'for': ['javascript', 'typescript', 'xml', 'html', 'markdown'] }
 let g:javascript_plugin_flow = 1
-Plug 'prettier/vim-prettier', { 'do': 'yarn install', 'for': ['javascript', 'typescript', 'json', 'markdown', 'less', 'css', 'scss', 'sass'] }
-let g:prettier#autoformat = 0
-let g:prettier#config#prose_wrap = 'always'
-autocmd BufWritePre *.ts,*.tsx,*.js,*.jsx,*.mjs,*.css,*.less,*.scss,*.json,*.graphql,*.md,*.vue PrettierAsync
 " TypeScript
-Plug 'leafgarland/typescript-vim', { 'for': 'typescript' }
-Plug 'peitalin/vim-jsx-typescript', { 'for': 'typescript' }
+Plug 'leafgarland/typescript-vim'
+Plug 'peitalin/vim-jsx-typescript'
 
 " Snippets
 Plug 'Shougo/neosnippet.vim'
@@ -63,6 +67,7 @@ nnoremap <Leader>D :Dash
 Plug 'christoomey/vim-system-copy'
 Plug 'christoomey/vim-sort-motion'
 Plug 'mbbill/undotree'
+Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
 let g:VtrUseVtrMaps = 1
@@ -83,7 +88,6 @@ nnoremap <Leader>gb :Gblame<CR>
 " custom text objects
 Plug 'kana/vim-textobj-user'
 Plug 'kana/vim-textobj-indent'
-Plug 'vimtaku/vim-textobj-keyvalue'
 Plug 'kana/vim-textobj-entire'
 Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
@@ -187,6 +191,7 @@ vnoremap <Leader>pg :DB g:bigspring_local<CR>
 set path+=**
 set wildmenu
 set wildignore+=*/node_modules/*
+set wildignore+=*/coverage/*
 set wildignore+=*/.git/*
 set wildignore+=*/dist/* 
 set wildignore+=*/build/* 
@@ -227,3 +232,9 @@ nnoremap ;  :
 nnoremap q; q:
 vnoremap ;  :
 vnoremap q; q:
+
+function! InsertCoAuthor(author)
+  execute 'normal oCo-authored-by: '.a:author
+endfunction
+
+command! Coauthor :call fzf#run({ 'source': 'authors', 'sink': function('InsertCoAuthor'), 'window': 'belowright 10new' })
