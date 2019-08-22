@@ -21,7 +21,7 @@ let g:gutentags_project_root = ['package.json', '.git']
 Plug 'sbdchd/neoformat'
 augroup fmt
   autocmd!
-  autocmd BufWritePre * undojoin | Neoformat
+  autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.md,*.gql,*.graphql undojoin | Neoformat
 augroup END
 
 " JavaScript
