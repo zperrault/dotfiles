@@ -13,15 +13,28 @@ Plug 'tpope/vim-dispatch'
 Plug 'tpope/vim-obsession'
 Plug 'tpope/vim-abolish'
 
+Plug 'godlygeek/tabular'
+
+Plug 'takac/vim-hardtime'
+let g:hardtime_default_on = 0
+let g:hardtime_ignore_buffer_patterns = [ "NERD.*" ]
+let g:hardtime_ignore_quickfix = 1
+
+Plug 'scrooloose/nerdtree'
+nnoremap <Leader><Tab>  :NERDTreeToggle<CR>
+inoremap <Leader><Tab>  <ESC>:NERDTreeToggle<CR>
+
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_add_default_project_roots = 0
 let g:gutentags_cache_dir = '~/.ctags_cache'
 let g:gutentags_project_root = ['package.json', '.git']
 
+Plug 'junegunn/goyo.vim'
+
 Plug 'sbdchd/neoformat'
 augroup fmt
   autocmd!
-  autocmd BufWritePre *.js,*.jsx,*.ts,*.tsx,*.md,*.gql,*.graphql undojoin | Neoformat
+  autocmd BufWritePre *.yml,*.yaml,*.json,*.js,*.jsx,*.ts,*.tsx,*.md,*.gql,*.graphql undojoin | Neoformat
 augroup END
 
 " JavaScript
@@ -41,9 +54,9 @@ let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
 imap <C-k>  <Plug>(neosnippet_expand_or_jump)
 smap <C-k>  <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>  <Plug>(neosnippet_expand_target)
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
+" if has('conceal')
+"   set conceallevel=2 concealcursor=niv
+" endif
 
 " Autocomplete
 Plug 'Shougo/deoplete.nvim', { 'do': ':UpdateRemotePlugins' }
@@ -70,7 +83,6 @@ Plug 'mbbill/undotree'
 Plug 'tmux-plugins/vim-tmux'
 Plug 'christoomey/vim-tmux-navigator'
 Plug 'christoomey/vim-tmux-runner'
-let g:VtrUseVtrMaps = 1
 
 Plug 'airblade/vim-gitgutter'
 Plug 'tpope/vim-fugitive'
@@ -93,6 +105,7 @@ Plug 'kana/vim-textobj-indent'
 Plug 'kana/vim-textobj-line'
 
 " colorscheme
+Plug 'NerdyPepper/vim-colors-plain'
 Plug 'chriskempson/base16-vim'
 
 " Plug 'file://' . expand('~/github/zperrault/sqitch.vim')
@@ -100,17 +113,23 @@ Plug '/usr/local/opt/fzf'
 Plug 'junegunn/fzf.vim'
 nnoremap <silent> <Leader>f   :Files<CR>
 nnoremap <silent> <Leader>b   :Buffers<CR>
-nnoremap <silent> <Leader>t   :Tags<CR>
 nnoremap <silent> <Leader>lt  :BTags<CR>
 nnoremap <silent> <Leader>w   :Windows<CR>
 nnoremap <silent> <Leader>a   :Ag<CR>
 
 
+Plug 'Dimercel/todo-vim'
+nnoremap <silent> <Leader>td  :TODOToggle<CR>
+
+Plug 'nathanaelkane/vim-indent-guides'
+
 call plug#end()
 
 " The basics
 set termguicolors
-colorscheme base16-tomorrow
+colorscheme base16-onedark
+" set background=light
+" colorscheme plain
 
 set number
 set relativenumber
@@ -122,25 +141,6 @@ set mouse=a
 
 nnoremap <ESC> :nohlsearch<CR>
 
-let g:netrw_liststyle=3
-let g:netrw_browse_split=4
-let g:netrw_winsize=20
-let g:netrw_is_open=0
-function! ToggleNetrw()
-  if g:netrw_is_open
-    let i = bufnr("$")
-    while i >= 1
-      if getbufvar(i, "&filetype") == "netrw"
-        execute "bwipeout ". i
-      endif
-      let i-=1
-    endwhile
-    let g:netrw_is_open=0
-  else
-    let g:netrw_is_open=1
-    execute "Lexplore"
-  endif
-endfunction
 
 nnoremap <Leader>~ :e + ~/.config/nvim/init.vim<cr>
 nnoremap <Leader>so :source %<CR>
@@ -184,9 +184,9 @@ set statusline+=\ %y
 
 nnoremap <Leader>u :UndotreeToggle<CR>
 
-let g:bigspring_local='postgres:bigspring_local'
-nnoremap <Leader>pg :DB g:bigspring_local 
-vnoremap <Leader>pg :DB g:bigspring_local<CR>
+let g:lmm='postgresql://postgres:postgres@localhost:2345/postgres'
+nnoremap <Leader>pg :DB g:lmm < %<CR>
+vnoremap <Leader>pg :DB g:lmm<CR>
 
 set path+=**
 set wildmenu
@@ -198,35 +198,32 @@ set wildignore+=*/build/*
 set wildignore+=*/archive/* 
 
 " Sqitch stuff
-function! GetCurrentSqitchChangeName()
-  return expand('%:t:r')
-endfunction
-function! GetPathToSqitchChange(change, stage)
-  return a:stage . '/' . a:change . '.sql'
-endfunction
-function! GetCurrentSqitchChangeStage()
-  return expand('%:p:h:t')
-endfunction
-function! OpenAllFilesForSqitchChange(change)
-  let l:stages = [ 'revert', 'verify', 'deploy']
-  for stage in l:stages
-    execute 'vsplit ' . GetPathToSqitchChange(a:change, stage)
-  endfor
-endfunction
-nnoremap gD   :execute 'edit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'deploy')<CR>
-nnoremap gR   :execute 'edit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'revert')<CR>
-nnoremap gV   :execute 'edit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'verify')<CR>
-nnoremap gvD  :execute 'vsplit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'deploy')<CR>
-nnoremap gvR  :execute 'vsplit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'revert')<CR>
-nnoremap gvV  :execute 'vsplit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'verify')<CR>
-nnoremap gA   :call OpenAllFilesForSqitchChange(GetCurrentSqitchChangeName())<CR>
-
-" wrap policy in conditional check
-" 0wwwyiwOdo $$<CR>begin<CR>if not exists (<CR>select from pg_catalog.pg_policies where policyname = 'bigspring_profile_competency'<CR>) then
+" function! GetCurrentSqitchChangeName()
+"   return expand('%:t:r')
+" endfunction
+" function! GetPathToSqitchChange(change, stage)
+"   return a:stage . '/' . a:change . '.sql'
+" endfunction
+" function! GetCurrentSqitchChangeStage()
+"   return expand('%:p:h:t')
+" endfunction
+" function! OpenAllFilesForSqitchChange(change)
+"   let l:stages = [ 'revert', 'verify', 'deploy']
+"   for stage in l:stages
+"     execute 'vsplit ' . GetPathToSqitchChange(a:change, stage)
+"   endfor
+" endfunction
+" nnoremap gD   :execute 'edit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'deploy')<CR>
+" nnoremap gR   :execute 'edit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'revert')<CR>
+" nnoremap gV   :execute 'edit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'verify')<CR>
+" nnoremap gvD  :execute 'vsplit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'deploy')<CR>
+" nnoremap gvR  :execute 'vsplit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'revert')<CR>
+" nnoremap gvV  :execute 'vsplit ' . GetPathToSqitchChange(GetCurrentSqitchChangeName(), 'verify')<CR>
+" nnoremap gA   :call OpenAllFilesForSqitchChange(GetCurrentSqitchChangeName())<CR>
 
 nnoremap <Leader>*  :execute 'vimgrep /' . expand('<cword>') . '/g **'<CR>
 nnoremap <Leader>!  :execute 'read ! ' . getline('.')<CR>
-nnoremap <silent> <Leader><TAB>  :call ToggleNetrw()<CR>
+vnoremap <Leader>!  :execute 'read ! \'<,\'>'<CR>
 
 nnoremap ;  :
 nnoremap q; q:
@@ -238,3 +235,29 @@ function! InsertCoAuthor(author)
 endfunction
 
 command! Coauthor :call fzf#run({ 'source': 'authors', 'sink': function('InsertCoAuthor'), 'window': 'belowright 10new' })
+
+nnoremap <Leader>q  :execute 'q'<CR>
+nnoremap <Leader>wq :execute 'wq'<CR>
+nnoremap <Leader>w  :execute 'w'<CR>
+
+
+nmap <Leader>\| vii:Tabularize /\|<CR>
+nmap <Leader>:  vii:Tabularize /:<CR>
+nmap <Leader>,  vii:Tabularize /,/l0<CR>
+nmap <Leader>F  vii:Tabularize /from<CR>
+
+function! UpdateGeneratedGraphQLTypes()
+  execute 'Dispatch yarn graphql:download-schema && yarn graphql:generate-types'
+endfunction
+
+
+syntax on
+
+if did_filetype()
+  finish
+endif
+if getline(1) =~# '^#!.*node'
+  setfiletype javascript
+elseif getline(1) =~# '^#!.*bash'
+  setfiletype sh
+endif

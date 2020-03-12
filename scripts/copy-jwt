@@ -1,0 +1,6 @@
+#!/usr/bin/env bash -e
+
+pushd ~/github/postlight/mta-live-media-manager/database-api > /dev/null
+yarn -s jwt:mint --email zach@mtahq.org | pbcopy
+echo "JWT copied to clipboard"
+popd > /dev/null
