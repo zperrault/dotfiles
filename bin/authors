@@ -1,0 +1,2 @@
+#!/usr/bin/env bash -e
+git shortlog --format='%aN <%aE>' | grep "^      " | cut -c7- | sort -u

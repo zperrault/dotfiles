@@ -1,0 +1,3 @@
+#!/bin/bash -e
+
+git branch -D $(git branch | sed 's/^[ \*] //' | fzf --multi)

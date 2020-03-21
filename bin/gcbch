@@ -1,0 +1,3 @@
+#!/usr/bin/env bash -ex
+
+git checkout -b $(club story $1 -f "ch%id/%t" | gsed -e 's/\(.*\)/\L\1/' -e 's/[^A-Za-z0-9/]\+/-/g')

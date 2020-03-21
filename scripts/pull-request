@@ -1,4 +1,0 @@
-#!/bin/bash
-
-issue comment --message=$(hub pull-request)
-issue transition --noedit 'Ready for Code Review'

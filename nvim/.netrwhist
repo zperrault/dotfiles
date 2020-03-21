@@ -1,8 +1,0 @@
-let g:netrw_dirhistmax  =10
-let g:netrw_dirhist_cnt =6
-let g:netrw_dirhist_1='/Users/zach/github/bigspring-io/bigspring/packages/pwa/src'
-let g:netrw_dirhist_2='/Users/zach/github/bigspring-io/bigspring/packages/pwa/src/app/routes/unauthenticated'
-let g:netrw_dirhist_3='/Users/zach/github/bigspring-io/bigspring/packages/pwa/src/app/routes/login'
-let g:netrw_dirhist_4='/Users/zach/.dotfiles/jira.d'
-let g:netrw_dirhist_5='/Users/zach/.dotfiles/jira.d/templates'
-let g:netrw_dirhist_6='/Users/zach/.dotfiles/jira.d'
