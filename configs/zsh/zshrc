@@ -9,3 +9,5 @@ export RC_FILES=$DOTFILES/configs/zsh/rc
 for file in $RC_FILES/*; do
   source "$file"
 done
+
+export EDITOR=nvim
