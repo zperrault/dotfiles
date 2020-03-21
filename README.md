@@ -1,9 +1,13 @@
 # dotfiles
 
-## ./scripts
+## setup
+
+Scripts to get setup.
+
+## bin
 
 One off scripts.
 
-## ./nvim
+## configs
 
-My neovim config.
+All config files.

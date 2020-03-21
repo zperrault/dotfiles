@@ -88,6 +88,7 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'junegunn/vim-peekaboo'
   Plug 'markonm/traces.vim'
   Plug 'vim-scripts/ReplaceWithRegister'
+  Plug 'dense-analysis/ale'
 
 call plug#end()
 
