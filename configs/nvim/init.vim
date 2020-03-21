@@ -78,8 +78,16 @@ call plug#begin('~/.config/nvim/plugged')
   Plug 'peitalin/vim-jsx-typescript'
   Plug 'jparise/vim-graphql'
 
-
   Plug 'chriskempson/base16-vim'
+
+  " Installed 3/21/20
+  Plug 'AndrewRadev/splitjoin.vim'
+  Plug 'Raimondi/delimitMate'
+  Plug 'terryma/vim-expand-region'
+  Plug 'vim-scripts/a.vim'
+  Plug 'junegunn/vim-peekaboo'
+  Plug 'markonm/traces.vim'
+  Plug 'vim-scripts/ReplaceWithRegister'
 
 call plug#end()
 
