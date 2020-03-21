@@ -1,2 +1,3 @@
-secrets/
-/nvim/.netrwhist
+/secrets
+/backups
+/configs/nvim/plugged

@@ -9,7 +9,7 @@ filetype plugin indent on
 " This sets the <Leader> key
 let mapleader = ',' " You can make this what you want
 
-call plug#begin('~/.nvim/plugged')
+call plug#begin('~/.config/nvim/plugged')
 
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
