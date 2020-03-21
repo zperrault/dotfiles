@@ -14,13 +14,18 @@ call plug#begin('~/.nvim/plugged')
   Plug 'tpope/vim-surround'
   Plug 'tpope/vim-commentary'
   Plug 'tpope/vim-repeat'
+  Plug 'tpope/vim-dispatch'
+  Plug 'tpope/vim-abolish'
 
   Plug 'airblade/vim-gitgutter'
   Plug 'tpope/vim-fugitive'
+  Plug 'tpope/vim-rhubarb' 
   nnoremap <silent> <Leader>gs  :Git<CR>
   nnoremap <Leader>gp  :Git push --force-with-lease<CR>
   nnoremap <Leader>gf  :Git fetch<CR>
   nnoremap <Leader>grm :Git fetch<CR>:Git rebase origin/master<CR>
+  nnoremap <Leader>gh  :Gbrowse<CR>
+  vnoremap <Leader>gh  :Gbrowse<CR>gv
 
   " An example plugin and one I recommend
   "   https://github.com/scrooloose/nerdtree
@@ -36,12 +41,43 @@ call plug#begin('~/.nvim/plugged')
 
   Plug 'kana/vim-textobj-user'
   Plug 'kana/vim-textobj-indent'
+  Plug 'kana/vim-textobj-line'
   Plug 'christoomey/vim-sort-motion'
 
-  Plug '/usr/local/opt/fzf'
+  Plug 'junegunn/fzf'
   Plug 'junegunn/fzf.vim'
-  nnoremap <silent> <Leader>f   :Files<CR>
-  nnoremap <silent> <Leader>a   :Ag<CR>
+  nnoremap <silent> <Leader>f :Files<CR>
+  nnoremap <silent> <Leader>a :Rg<CR>
+
+  Plug 'ludovicchabant/vim-gutentags'
+  let g:gutentags_add_default_project_roots = 0
+  let g:gutentags_cache_dir = '~/.ctags_cache'
+  let g:gutentags_project_root = ['package.json', '.git']
+
+  Plug 'Shougo/neosnippet.vim'
+  let g:neosnippet#enable_conceal_markers=1
+  let g:neosnippet#disable_runtime_snippets = { '_': 1 }
+  let g:neosnippet#snippets_directory = '~/.config/nvim/snippets'
+  imap <C-k>  <Plug>(neosnippet_expand_or_jump)
+  smap <C-k>  <Plug>(neosnippet_expand_or_jump)
+  xmap <C-k>  <Plug>(neosnippet_expand_target)
+  nnoremap <Leader>sn :NeoSnippetEdit -split -vertical<CR>G
+  if has('conceal')
+    set conceallevel=2 concealcursor=niv
+  endif
+
+  Plug 'sbdchd/neoformat'
+  augroup fmt
+    autocmd!
+    autocmd BufWritePre *.yml,*.yaml,*.json,*.js,*.jsx,*.ts,*.tsx,*.md,*.gql,*.graphql undojoin | Neoformat
+  augroup END
+
+
+  " |filetypes|
+  Plug 'leafgarland/typescript-vim'
+  Plug 'peitalin/vim-jsx-typescript'
+  Plug 'jparise/vim-graphql'
+
 
   Plug 'chriskempson/base16-vim'
 
@@ -91,7 +127,14 @@ nnoremap <silent> <Leader>w   :w<CR>
 nnoremap <silent> <Leader>q   :q<CR>
 nnoremap <silent> <Leader>wq  :wq<CR>
 
-nnoremap <silent> <Leader>~ :e + ~/.config/nvim/init.vim<cr>
+nnoremap <silent> <Leader>~   :e ~/.config/nvim/init.vim<CR>
 nnoremap <silent> <Leader>so  :source %<CR>
+
+nnoremap <Leader>pi :PlugInstall<CR>
+
+vnoremap <Leader>pg :DB postgresql://postgres:postgres@localhost:2345/postgres<CR>gv
+nnoremap <Leader>pg :DB postgresql://postgres:postgres@localhost:2345/postgres 
+
+vnoremap <silent> <Leader>y :w !pbcopy<CR><CR>:echom 'Copied to clipboard'<CR>
 
 colorscheme base16-onedark

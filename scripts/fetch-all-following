@@ -1,0 +1,15 @@
+#!/usr/bin/env ruby
+
+require 'net/http'
+
+page = 1
+uri = URI("https://api.github.com/users/zperrault/following?page=#{page}")
+
+Net::HTTP.start(uri.host, uri.port, use_ssl: true) do |http|
+
+  loop
+
+  request = Net::HTTP::Get.new uri
+  response = http.request(request)
+  puts response.body
+end

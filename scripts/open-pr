@@ -1,0 +1,5 @@
+#!/bin/bash -e
+
+REVIEWERS=$(http https://api.github.com/users/zperrault/following per_page==100 | jq -r '.[].login' | fzf --multi | paste -s -d"," -)
+
+hub pull-request --push --draft --copy --browse --reviewer=$REVIEWERS

@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+psql -U postgres -h localhost -p 2345 -d postgres \
+  -c 'INSERT INTO lmm_public.user_feed_group_grants (user_id, feed_group_name) SELECT users.id, feed_groups.name FROM lmm_public.users CROSS JOIN lmm_public.feed_groups ON CONFLICT (user_id, feed_group_name) DO NOTHING;'

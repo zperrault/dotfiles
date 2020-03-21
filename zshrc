@@ -8,6 +8,8 @@ export PATH=$PATH:$ANDROID_HOME/emulator
 export PATH=$PATH:$ANDROID_HOME/tools
 export PATH=$PATH:$ANDROID_HOME/tools/bin
 export PATH=$PATH:$ANDROID_HOME/platform-tools
+export PATH="/usr/local/opt/gnu-sed/libexec/gnubin:$PATH"
+
 
 
 HISTSIZE=10000
@@ -48,15 +50,13 @@ alias cat=ccat
 
 alias rc="nvim ~/.zshrc -c 'normal G' && source ~/.zshrc"
 
+alias sed="gsed"
+
 export GPG_TTY=$(tty)
 
 eval "$(rbenv init -)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-
-export FZF_DEFAULT_COMMAND='ag -g ""'
-export FZF_CTRL_T_COMMAND="$FZF_DEFAULT_COMMAND"
-export FZF_DEFAULT_OPTIONS="--preview 'bat --style=numbers --color=always {}'"
 
 source ~/.dotfiles/secrets/zshrc
 
