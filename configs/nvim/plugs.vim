@@ -62,4 +62,5 @@ Plug 'vim-scripts/a.vim'
 Plug 'junegunn/vim-peekaboo'
 Plug 'markonm/traces.vim'
 Plug 'vim-scripts/ReplaceWithRegister'
-Plug 'dense-analysis/ale'
+" Plug 'dense-analysis/ale'
+

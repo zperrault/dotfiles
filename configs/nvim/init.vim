@@ -8,3 +8,4 @@ call plug#end()
 
 source ~/.config/nvim/settings.vim
 source ~/.config/nvim/maps.vim
+source ~/.config/nvim/statusline.vim
