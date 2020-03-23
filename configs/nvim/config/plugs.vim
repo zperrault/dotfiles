@@ -57,12 +57,12 @@ Plug 'chriskempson/base16-vim'
 " Installed 3/21/20
 Plug 'AndrewRadev/splitjoin.vim'
 Plug 'Raimondi/delimitMate'
-Plug 'terryma/vim-expand-region'
 Plug 'junegunn/vim-peekaboo'
 Plug 'markonm/traces.vim'
+Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/ReplaceWithRegister'
+Plug 'vim-scripts/a.vim'
 " Plug 'dense-analysis/ale'
 
-Plug 'vim-scripts/a.vim'
-let g:alternateExtensions_TS = "styled.ts,styled.tsx"
-let g:alternateExtensions_TSX = "styled.ts,styled.tsx"
+
+Plug 'junegunn/goyo.vim'
