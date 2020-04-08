@@ -51,6 +51,8 @@ augroup END
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
+Plug 'lifepillar/pgsql.vim'
+let g:sql_type_default = 'pgsql'
 
 Plug 'chriskempson/base16-vim'
 
@@ -63,6 +65,8 @@ Plug 'terryma/vim-expand-region'
 Plug 'vim-scripts/ReplaceWithRegister'
 Plug 'vim-scripts/a.vim'
 " Plug 'dense-analysis/ale'
-
+Plug 'Konfekt/vim-compilers'
 
 Plug 'junegunn/goyo.vim'
+
+Plug 'tommcdo/vim-express'
