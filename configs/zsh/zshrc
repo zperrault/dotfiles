@@ -5,8 +5,13 @@ export PS1=" %2~ %# "
 
 export DOTFILES=$HOME/github/zperrault/dotfiles
 export RC_FILES=$DOTFILES/configs/zsh/rc
+export SECRETS=$DOTFILES/secrets/zsh
 
 for file in $RC_FILES/*; do
+  source "$file"
+done
+
+for file in $SECRETS/*; do
   source "$file"
 done
 

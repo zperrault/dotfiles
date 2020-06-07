@@ -50,7 +50,17 @@ nnoremap <silent> <Leader>so  :source %<CR>
 
 nnoremap <Leader>pi :PlugInstall<CR>
 
-vnoremap <Leader>pg :DB postgresql://postgres:postgres@localhost:2345/postgres<CR>gv
-nnoremap <Leader>pg :DB postgresql://postgres:postgres@localhost:2345/postgres 
 
 vnoremap <silent> <Leader>y :w !pbcopy<CR><CR>:echom 'Copied to clipboard'<CR>
+
+
+nnoremap <Leader>spgd :DB g:current_db = 
+
+let g:dev_db = 'postgresql://postgres:postgres@localhost:2345/postgres'
+let g:test_db = 'postgresql://postgres:postgres@0.0.0.0:8899/postgres'
+let g:current_db = g:dev_db
+vnoremap <Leader>pg   :DB g:current_db<CR>gv
+nnoremap <Leader>pg   :DB g:current_db 
+
+
+nnoremap <Leader>!  :Dispatch 

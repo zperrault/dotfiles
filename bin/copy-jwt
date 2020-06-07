@@ -1,9 +1,8 @@
-#!/usr/bin/env bash -e
+#!/usr/bin/env bash
 
 pushd ~/github/postlight/mta-live-media-manager/database-api > /dev/null
+
 ./scripts/mint-development-jwt.ts --email zach@mtahq.org | pbcopy
 echo "JWT copied to clipboard"
-psql -U postgres -h localhost -p 2345 -d postgres -c 'insert into lmm_public.user_feed_group_grants (user_id, feed_group_name) SELECT users.id, feed_groups.name FROM lmm_public.users cross join lmm_public.feed_groups on conflict (user_id, feed_group_name) do nothing;'
-echo "Grants upserted"
 osascript -e 'display notification "JWT copied to clipboard" with title "copy-jwt" sound name "default"'
 popd > /dev/null

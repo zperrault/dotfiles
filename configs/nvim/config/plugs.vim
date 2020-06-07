@@ -36,20 +36,21 @@ imap <C-k>  <Plug>(neosnippet_expand_or_jump)
 smap <C-k>  <Plug>(neosnippet_expand_or_jump)
 xmap <C-k>  <Plug>(neosnippet_expand_target)
 nnoremap <Leader>sn :NeoSnippetEdit -split -vertical<CR>G
-if has('conceal')
-  set conceallevel=2 concealcursor=niv
-endif
 
 Plug 'sbdchd/neoformat'
+let g:neoformat_enabled_typescriptreact = ['prettier']
 augroup fmt
   autocmd!
-  autocmd BufWritePre *.yml,*.yaml,*.json,*.js,*.jsx,*.ts,*.tsx,*.md,*.gql,*.graphql undojoin | Neoformat
+  autocmd BufWritePre *.yml,*.yaml,*.json,*.js,*.jsx,*.ts,*.tsx,*.md,*.gql,*.graphql,*.re undojoin | Neoformat
 augroup END
+
+Plug 'godlygeek/tabular'
 
 
 " |filetypes|
 Plug 'leafgarland/typescript-vim'
 Plug 'peitalin/vim-jsx-typescript'
+" Plug 'HerringtonDarkholme/yats.vim'
 Plug 'jparise/vim-graphql'
 Plug 'lifepillar/pgsql.vim'
 let g:sql_type_default = 'pgsql'
@@ -69,4 +70,8 @@ Plug 'Konfekt/vim-compilers'
 
 Plug 'junegunn/goyo.vim'
 
+Plug 'reasonml-editor/vim-reason-plus'
+
 Plug 'tommcdo/vim-express'
+
+" Plug 'neoclide/coc.nvim', {'branch': 'release'}
