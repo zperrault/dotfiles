@@ -54,6 +54,8 @@ Plug 'peitalin/vim-jsx-typescript'
 Plug 'jparise/vim-graphql'
 Plug 'lifepillar/pgsql.vim'
 let g:sql_type_default = 'pgsql'
+Plug 'lepture/vim-jinja'
+Plug 'chrisbra/csv.vim'
 
 Plug 'chriskempson/base16-vim'
 
