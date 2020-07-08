@@ -1,7 +1,0 @@
-#!/usr/bin/env bash -e
-
-git fetch
-git checkout master
-git pull
-gcbch $(club search "owner:zperrault" --state="To Do" -f '%id %t' | fzf | awk '{ print $1 }')
-git push
