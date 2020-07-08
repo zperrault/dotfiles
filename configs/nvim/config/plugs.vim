@@ -22,6 +22,7 @@ Plug 'christoomey/vim-sort-motion'
 
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'BurntSushi/ripgrep'
 
 Plug 'ludovicchabant/vim-gutentags'
 let g:gutentags_add_default_project_roots = 0
@@ -76,4 +77,7 @@ Plug 'reasonml-editor/vim-reason-plus'
 
 Plug 'tommcdo/vim-express'
 
+Plug 'ihsanturk/neuron.vim'
+
 " Plug 'neoclide/coc.nvim', {'branch': 'release'}
+

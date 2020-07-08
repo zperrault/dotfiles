@@ -25,6 +25,10 @@ set mouse=a
 "   set signcolumn=yes
 " endif
 
+set nobackup
+set nowritebackup
+set cmdheight=2
+
+autocmd FileType markdown setlocal spell wrap linebreak textwidth=0 wrapmargin=0 
 
 colorscheme base16-onedark
-

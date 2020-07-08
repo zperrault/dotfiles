@@ -4,7 +4,6 @@ let mapleader = ',' " You can make this what you want
 nnoremap <silent> <Leader>gs  :Git<CR>
 nnoremap <Leader>gp  :Git push --force-with-lease<CR>
 nnoremap <Leader>gf  :Git fetch<CR>
-nnoremap <Leader>grm :Git fetch<CR>:Git rebase origin/master<CR>
 nnoremap <Leader>gh  :Gbrowse<CR>
 vnoremap <Leader>gh  :Gbrowse<CR>gv
 
@@ -59,6 +58,7 @@ nnoremap <Leader>spg :DB g:current_db =
 let g:dev_db = 'postgresql://postgres:postgres@localhost:2345/postgres'
 let g:test_db = 'postgresql://postgres:postgres@0.0.0.0:8899/postgres'
 let g:local_db = 'postgresql:///development'
+let g:current_db = g:dev_db
 vnoremap <Leader>pg   :DB g:current_db<CR>gv
 nnoremap <Leader>pg   :DB g:current_db 
 

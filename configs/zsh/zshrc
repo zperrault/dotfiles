@@ -16,3 +16,4 @@ for file in $SECRETS/*; do
 done
 
 export EDITOR=nvim
+if [ -e /Users/zach/.nix-profile/etc/profile.d/nix.sh ]; then . /Users/zach/.nix-profile/etc/profile.d/nix.sh; fi # added by Nix installer
